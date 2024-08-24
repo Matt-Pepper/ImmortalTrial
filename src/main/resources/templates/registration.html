@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Please Register</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+    <script th:src="@{/htmx.min.js}" type="text/javascript"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const password = document.getElementById('password');
+            const matchingPassword = document.getElementById('matchingpassword');
+            const errorDiv = document.getElementById('password-match-error');
+
+            function checkPasswordMatch() {
+                if (password.value !== matchingPassword.value) {
+                    errorDiv.textContent = 'Passwords do not match.';
+                } else {
+                    errorDiv.textContent = '';
+                }
+            }
+
+            password.addEventListener('input', checkPasswordMatch);
+            matchingPassword.addEventListener('input', checkPasswordMatch);
+        });
+    </script>
+</head>
+<body>
+<h1>Registration</h1>
+<div class="w-full max-w-xs">
+    <form th:action="@{/registration}" th:object="${user}" method="POST" enctype="application/x-www-form-urlencoded" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb4">
+        <div th:if="${message}" class="mb-4 text-red-500">
+            <p th:text="${message}"></p>
+        </div>
+        <div class="mb-4">
+            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">
+                Username:
+            </label>
+            <input hx-get="/registration/check-username" hx-params="username" hx-trigger="blur" hx-target="#username-check" th:field="*{username}" id="username" type="text" placeholder="Username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+
+                    <p th:each="error: ${#fields.errors('username')}"
+                       th:text="${error}">Validation error</p>
+            <div id="username-check" class="mt-2 text-red-500"></div>
+        </div>
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
+                Email:
+            </label>
+            <input hx-get="/registration/check-email" hx-params="email" hx-trigger="blur" hx-target="#email-check"  type="email" th:field="*{email}" id="email" placeholder="Email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+            <p th:each="error : ${#fields.errors('email')}"
+               th:text="${error}">Validation error</p>
+            <div id="email-check" class="mt-2 text-red-500"></div>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                Password:
+            </label>
+            <input type="password" th:field="*{password}" id="password"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
+
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div class="mb-4">
+            <label for="matchingpassword" class="block text-gray-700 text-sm font-bold mb-2" >
+                Confirm:
+            </label>
+            <input type="password" th:field="*{matchingPassword}" id="matchingpassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
+
+            <div id="password-match-error" class="mt-2 text-red-500"></div>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >Submit</button>
+            <a th:href="@{#}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot Password?</a>
+        </div>
+
+    </form>
+</div>
+
+<a th:href="@{/login.html}">Login</a>
+</body>
+</html>

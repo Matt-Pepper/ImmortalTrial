@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgres:
+    env_file:
+      - .env
+    image: 'postgres:latest'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: immortal
+    volumes:
+      - ./db/pg-data/:/var/lib/postgresql/data/
+
+  cache:
+    image: 'redis:latest'
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass password
+    volumes:
+      - ./db/cache/:/data
