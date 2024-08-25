@@ -1,6 +1,6 @@
 package com.immortaltrial.game.security;
 
-import com.immortaltrial.game.security.services.UserDetailsServiceImpl;
+import com.immortaltrial.game.security.services.impl.UserDetailsServiceImpl;
 import jakarta.servlet.DispatcherType;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,32 +53,6 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //    @Bean
-    //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    //        http.csrf(AbstractHttpConfigurer::disable)
-    //                .exceptionHandling(exception ->
-    // exception.authenticationEntryPoint(unauthorizedHandler()))
-    //                .sessionManagement(session ->
-    // session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-    //                .authorizeHttpRequests(auth ->
-    //                        auth.requestMatchers("/api/auth/**").permitAll()
-    //                                .requestMatchers("/api/test/**").permitAll()
-    //                                .anyRequest().authenticated());
-    //
-    //        http.authenticationProvider(authenticationProvider());
-    //
-    //        http.addFilterBefore(authenticationJwtTokenFilter(),
-    // UsernamePasswordAuthenticationFilter.class);
-    //
-    //        return http.build();
-    //    }
-
-    //    @Bean
-    //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    //        http.
-    //
-    //    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
@@ -104,29 +78,4 @@ public class WebSecurityConfig {
 
         return http.build();
     }
-
-    //    @Bean
-    //    public PersistentTokenRepository persistentTokenRepository() {
-    //        JdbcTokenRepositoryImpl tokenRepo = new JdbcTokenRepositoryImpl();
-    //        tokenRepo.setDataSource(dataSource);
-    //        return tokenRepo;
-    //    }
-    //
-    //    @Bean
-    //    RememberMeAuthenticationFilter rememberMeFilter() {
-    //        return new RememberMeAuthenticationFilter(rememberMeAuthenticationProvider(),
-    // rememberMeServices());
-    //    }
-    //
-    //    @Bean
-    //    RememberMeAuthenticationProvider rememberMeAuthenticationProvider() {
-    //        return new RememberMeAuthenticationProvider(secret);
-    //    }
-    //
-    //
-    //    @Bean
-    //    RememberMeServices rememberMeServices() {
-    //        return new PersistentTokenBasedRememberMeServices(secret, userDetailsService(),
-    // persistentTokenRepository());
-    //    }
 }
