@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/api/registration")
 public class RegistrationController {
 
     public final UserService userService;
